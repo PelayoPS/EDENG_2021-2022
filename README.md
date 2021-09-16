@@ -1,5 +1,5 @@
 # EDENG_2021-2022
-In this repository i will be uploading all the laboratory work done in the subject Data structures in the course 2021-2022
+In this repository i will be uploading all the laboratory work done in the subject Data Structures in the course 2021-2022
 
 ## Information
 
