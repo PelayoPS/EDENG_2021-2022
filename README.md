@@ -7,7 +7,7 @@ In this repository i will be uploading all the laboratory work done in the subje
 
 **Año**: 2021-2022
 
-🔔 My links 🔔
+🖥️My links💻
 
 ► Twitch https://www.twitch.tv/pelayo_p_s
 
