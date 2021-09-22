@@ -56,7 +56,6 @@ public class TestBench {
 	/**
 	 * Developed version of the test method in which the values are printed in a document
 	 * In his new version we get to determine the number of samples
-	 * @param <E>
 	 * @param outputFileName
 	 * @param startN
 	 * @param endN
@@ -64,13 +63,15 @@ public class TestBench {
 	public static void test(String outputFileName, int samples, int startN, int endN) {
 		//executes an algorithm for a given workload 'n'...
 		List<Long> timesList = new ArrayList<Long>();
-		List<Long> meanTimeList = new ArrayList<Long>(endN-startN);
+		List<Long> meanTimeList = new ArrayList<Long>();
+		for (int i = 0; i <= (endN-startN);i++) {
+			meanTimeList.add((long) 0);
+		}
 		
 		for (int i = 0; i < samples; i++) {
 			for (int j = startN; j <= endN; j++) {
-				meanTimeList.add((long) 0);
 				long beforeExec = System.currentTimeMillis();
-				Algorithms.linear(j);
+				Algorithms.cubic(j);
 				timesList.add((System.currentTimeMillis()-beforeExec));	
 				long aux = meanTimeList.get(j-startN);
 				aux += timesList.get(j-startN);
