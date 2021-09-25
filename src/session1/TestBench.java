@@ -68,8 +68,8 @@ public class TestBench {
 			meanTimeList.add((long) 0);
 		}
 		
-		for (int i = 0; i < samples; i++) {
-			for (int j = startN; j <= endN; j++) {
+		for (int j = startN; j <= endN; j++) {
+			for (int i = 0; i < samples; i++) {
 				long beforeExec = System.currentTimeMillis();
 				Algorithms.cubic(j);
 				timesList.add((System.currentTimeMillis()-beforeExec));	
