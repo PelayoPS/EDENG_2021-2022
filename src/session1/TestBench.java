@@ -2,13 +2,15 @@ package session1;
 
 import java.io.FileWriter;
 
+
 import java.io.PrintWriter;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TestBench {
-	public static final int SLEEP_TIME = 25;
+	public static final int SLEEP_TIME = 2;
 	
 	/**
 	 * Simple version of test method
@@ -59,19 +61,20 @@ public class TestBench {
 	 * @param outputFileName
 	 * @param startN
 	 * @param endN
+	 * @throws Exception 
 	 */
-	public static void test(String outputFileName, int samples, int startN, int endN) {
+	public static void test(String outputFileName, int samples, int startN, int endN,
+			String className, String methodName) throws Exception {
 		//executes an algorithm for a given workload 'n'...
 		List<Long> timesList = new ArrayList<Long>();
 		List<Long> meanTimeList = new ArrayList<Long>();
 		for (int i = 0; i <= (endN-startN);i++) {
 			meanTimeList.add((long) 0);
 		}
-		
-		for (int j = startN; j <= endN; j++) {
-			for (int i = 0; i < samples; i++) {
+		for (int i = 0; i < samples; i++) {
+			for (int j = startN; j <= endN; j++) {
 				long beforeExec = System.currentTimeMillis();
-				Algorithms.cubic(j);
+				testAlgorithm(className, methodName, j);//loads the method using recursion
 				timesList.add((System.currentTimeMillis()-beforeExec));	
 				long aux = meanTimeList.get(j-startN);
 				aux += timesList.get(j-startN);
@@ -83,6 +86,35 @@ public class TestBench {
 		}
 		writeFile(outputFileName, meanTimeList);
 		System.out.print(meanTimeList + "ms");
+	}
+	
+	/**
+	 * private method used to implement reflection
+	 *  so the methods can be loaded dynamically
+	 * @param className
+	 * @param methodName
+	 * @param n
+	 * @throws Exception
+	 */
+	private static void testAlgorithm(String className, String methodName, long n)
+			throws Exception {
+		Class<?> myClass = null;
+		Object myObject = null;
+		
+		//loads the class dynamically using reflection
+		myClass = Class.forName(className);
+		myObject = myClass.newInstance();
+		
+		//gets a method instance
+		Class<?>[] params = new Class[1];
+		params[0] = Long.TYPE;
+		
+		Method m = myClass.getMethod(methodName, params);
+		
+		//Calls the method in java using reflection
+		m.invoke(myObject, n);
+		
+		
 	}
 	
 	/**
