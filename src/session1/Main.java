@@ -3,12 +3,12 @@ package session1;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		TestBench.test("linear.txt", 3, 1, 50, "session1.Algorithms", "linear");
-		TestBench.test("quadratic.txt", 3, 1, 50, "session1.Algorithms", "quadratic");
-		TestBench.test("cubic.txt", 3, 1, 20, "session1.Algorithms", "cubic");
-		TestBench.test("logarithmic.txt", 3, 1, 50, "session1.Algorithms", "logarithmic");
-		TestBench.test("factorial.txt", 3, 1, 50, "session1.Algorithms", "factorial");
-		TestBench.test("factorialRec.txt", 3, 1, 50, "session1.Algorithms", "factorialRec");
+//		TestBench.test("linear.txt", 3, 1, 50, "session1.Algorithms", "linear");
+//		TestBench.test("quadratic.txt", 3, 1, 50, "session1.Algorithms", "quadratic");
+//		TestBench.test("cubic.txt", 3, 1, 20, "session1.Algorithms", "cubic");
+//		TestBench.test("logarithmic.txt", 3, 1, 50, "session1.Algorithms", "logarithmic");
+//		TestBench.test("factorial.txt", 3, 1, 50, "session1.Algorithms", "factorial");
+//		TestBench.test("factorialRec.txt", 3, 1, 50, "session1.Algorithms", "factorialRec");
 		TestBench.test("pow.txt", 3, 1, 50, "session1.Algorithms", "pow");
 		TestBench.test("powRec1.txt", 3, 1, 12, "session1.Algorithms", "powRec1");
 		TestBench.test("powRec2.txt", 3, 1, 12, "session1.Algorithms", "powRec2");

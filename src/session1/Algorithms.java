@@ -40,11 +40,13 @@ public class Algorithms {
 		long factorial = 1;
 		for (long i = n; i > 0; i--) {
 			factorial *= i;
+			TestBench.doNothing(i);
 		}
 		return factorial;
 	}
 
 	public static long factorialRec(long n) {
+		TestBench.doNothing(n);
 		return n == 0 ? 1 : n * factorialRec(n - 1);
 	}
 
@@ -52,20 +54,24 @@ public class Algorithms {
 		long pow = 1;
 		for (long i = n; i > 0; i--) {
 			pow *= 2;
+			TestBench.doNothing(i);
 		}
 		return pow;
 	}
 
 	public static long powRec1(long n) {
 		System.out.print("\nworking on " + n);
+		TestBench.doNothing(n);
 		return n == 0 ? 1 : powRec1(n - 1) + powRec1(n - 1);
 	}
 
 	public static long powRec2(long n) {
+		TestBench.doNothing(n);
 		return n == 0 ? 1 : powRec2(n - 1) * 2;
 	}
 
 	public static long powRec3(long n) {
+		TestBench.doNothing(n);
 		return n == 0 ? 1 : n % 2 == 0 ? powRec3(n / 2) * powRec3(n / 2) : 2 * powRec3(n / 2) * powRec3(n / 2);
 	}
 
@@ -73,6 +79,7 @@ public class Algorithms {
 		if (n == 0) {
 			return 1;
 		} else {
+			TestBench.doNothing(n);
 			long pow = (long) Math.pow(powRec4(n / 2), 2);
 			if (n % 2 == 0) {
 				return pow;
