@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import session1.Algorithms;
+import algortihms.Algorithms;
 
 public class TestAlgorithms {
 

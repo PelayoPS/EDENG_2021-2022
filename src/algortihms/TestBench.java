@@ -1,4 +1,4 @@
-package session1;
+package algortihms;
 
 import java.io.FileWriter;
 

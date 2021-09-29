@@ -1,4 +1,4 @@
-package session1;
+package algortihms;
 
 public class Algorithms {
 
@@ -40,6 +40,7 @@ public class Algorithms {
 		long factorial = 1;
 		for (long i = n; i > 0; i--) {
 			factorial *= i;
+			System.out.println("executing job: " + i);
 			TestBench.doNothing(i);
 		}
 		return factorial;
@@ -47,6 +48,7 @@ public class Algorithms {
 
 	public static long factorialRec(long n) {
 		TestBench.doNothing(n);
+		System.out.println("executing job: " + n);
 		return n == 0 ? 1 : n * factorialRec(n - 1);
 	}
 
@@ -54,6 +56,7 @@ public class Algorithms {
 		long pow = 1;
 		for (long i = n; i > 0; i--) {
 			pow *= 2;
+			System.out.println("executing job: " + i);
 			TestBench.doNothing(i);
 		}
 		return pow;
@@ -66,19 +69,24 @@ public class Algorithms {
 	}
 
 	public static long powRec2(long n) {
+		System.out.println("executing job: " + n);
 		TestBench.doNothing(n);
 		return n == 0 ? 1 : powRec2(n - 1) * 2;
 	}
 
 	public static long powRec3(long n) {
+		System.out.println("executing job: " + n);
 		TestBench.doNothing(n);
 		return n == 0 ? 1 : n % 2 == 0 ? powRec3(n / 2) * powRec3(n / 2) : 2 * powRec3(n / 2) * powRec3(n / 2);
 	}
 
 	public static long powRec4(long n) {
 		if (n == 0) {
+			System.out.println("executing job: " + n);
+			TestBench.doNothing(n);
 			return 1;
 		} else {
+			System.out.println("executing job: " + n);
 			TestBench.doNothing(n);
 			long pow = (long) Math.pow(powRec4(n / 2), 2);
 			if (n % 2 == 0) {
