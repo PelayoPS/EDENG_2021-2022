@@ -2,11 +2,6 @@ package algortihms;
 
 public class Algorithms {
 
-	/**
-	 * algorithm of linear complexity
-	 * 
-	 * @param n
-	 */
 	public static void linear(long n) {
 		for (int i = 0; i <= n; i++) {
 			System.out.println("executing job: " + i);
@@ -14,11 +9,6 @@ public class Algorithms {
 		}
 	}
 
-	/**
-	 * algorithm of quadratic complexity
-	 * 
-	 * @param n
-	 */
 	public static void quadratic(long n) {
 		for (int i = 0; i <= n; i++) {
 			for (int j = 0; j <= n; j++) {
@@ -28,11 +18,6 @@ public class Algorithms {
 		}
 	}
 
-	/**
-	 * algorithm of cubic complexity
-	 * 
-	 * @param n
-	 */
 	public static void cubic(long n) {
 		for (int i = 0; i <= n; i++) {
 			for (int j = 0; j <= n; j++) {
@@ -44,11 +29,6 @@ public class Algorithms {
 		}
 	}
 
-	/**
-	 * algorithm of logarithmic complexity
-	 * 
-	 * @param n
-	 */
 	public static void logarithmic(long n) {
 		for (long i = n; i >= 1; i /= 2) {
 			System.out.println("executing job: " + i);
@@ -56,12 +36,6 @@ public class Algorithms {
 		}
 	}
 
-	/**
-	 * algorithm of the definition of the factorial using an iterative version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long factorial(long n) {
 		long factorial = 1;
 		for (long i = n; i > 0; i--) {
@@ -72,25 +46,12 @@ public class Algorithms {
 		return factorial;
 	}
 
-	/**
-	 * algorithm of the definition of factorial using a recursive version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long factorialRec(long n) {
 		TestBench.doNothing(n);
 		System.out.println("executing job: " + n);
 		return n == 0 ? 1 : n * factorialRec(n - 1);
 	}
 
-	/**
-	 * algorithm of the definition of the power of a number using an iterative
-	 * version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long pow(long n) {
 		long pow = 1;
 		for (long i = n; i > 0; i--) {
@@ -101,52 +62,24 @@ public class Algorithms {
 		return pow;
 	}
 
-	/**
-	 * algorithm of the definition of the power of a number using a recursive
-	 * version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long powRec1(long n) {
 		System.out.print("\nworking on " + n);
 		TestBench.doNothing(n);
 		return n == 0 ? 1 : powRec1(n - 1) + powRec1(n - 1);
 	}
 
-	/**
-	 * another algorithm of the definition of the power of a number using a
-	 * recursive version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long powRec2(long n) {
 		System.out.println("executing job: " + n);
 		TestBench.doNothing(n);
 		return n == 0 ? 1 : powRec2(n - 1) * 2;
 	}
 
-	/**
-	 * another algorithm of the definition of the power of a number using a
-	 * recursive version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long powRec3(long n) {
 		System.out.println("executing job: " + n);
 		TestBench.doNothing(n);
 		return n == 0 ? 1 : n % 2 == 0 ? powRec3(n / 2) * powRec3(n / 2) : 2 * powRec3(n / 2) * powRec3(n / 2);
 	}
 
-	/**
-	 * another algorithm of the definition of the power of a number using a
-	 * recursive version
-	 * 
-	 * @param n
-	 * @return
-	 */
 	public static long powRec4(long n) {
 		if (n == 0) {
 			System.out.println("executing job: " + n);
