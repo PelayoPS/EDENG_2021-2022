@@ -215,6 +215,96 @@ public class Graph<T> {
 	}
 
 	/**
+	 * checks if a node is drain node, which means that the output degree = 0 and
+	 * the input degree > 0
+	 * 
+	 * @param element
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isDrainNode(T element) throws Exception {
+		int inputDegree = intputOutputDegree(element)[0];
+		int outputDegree = intputOutputDegree(element)[1];
+		if (outputDegree == 0 && inputDegree > 0) {// condition to be drainNode
+			return true;
+		}
+		return false;
+
+	}
+
+	/**
+	 * checks if a node is source node, which means that the output degree > 0 and
+	 * input degree = 0
+	 * 
+	 * @param element
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isSourceNode(T element) throws Exception {
+		int inputDegree = intputOutputDegree(element)[0];
+		int outputDegree = intputOutputDegree(element)[1];
+		if (inputDegree == 0 && outputDegree > 0) {// condition to be sourceNode
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * returns an array with the input and output degree
+	 * 
+	 * @param element
+	 * @return
+	 * @throws Exception
+	 */
+	private int[] intputOutputDegree(T element) throws Exception {
+		int[] result = new int[2];
+		int inputDegree = 0;
+		int outputDegree = 0;
+
+		for (int i = 0; i < getSize(); i++) {
+			if (edges[i][getNode(element)] == true) {
+				inputDegree++;// if there is an edge to the element
+			}
+			if (edges[getNode(element)][i] == true) {
+				outputDegree++;// if there is an edge from the element
+			}
+		}
+		result[0] = inputDegree;
+		result[1] = outputDegree;
+		return result;
+	}
+
+	/**
+	 * Returns the number of drain nodes
+	 * 
+	 * @return
+	 */
+	public int countDrainNodes() throws Exception {
+		int counter = 0;
+		for (GraphNode<T> node : nodes) {
+			if (isDrainNode(node.getElement())) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	/**
+	 * Returns the number of source nodes
+	 * 
+	 * @return
+	 */
+	public int countSourceNodes() throws Exception {
+		int counter = 0;
+		for (GraphNode<T> node : nodes) {
+			if (isSourceNode(node.getElement())) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	/**
 	 * prints all the nodes calling the print of each one
 	 */
 	public void print() {
