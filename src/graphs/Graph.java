@@ -9,10 +9,16 @@ public class Graph<T> {
 
 	public static int INDEX_NOT_FOUND = -1;
 
+	// Floyd Matrices
+	protected double[][] A;// cost matrix
+	protected int[][] P;// pathway matrix
+	// Foyd constants
+	public static double INFINITE = Double.MAX_VALUE;
+	public int EMPTY = -1;
+
 	/**
 	 * Default constructor for the Graph class reserves memory for the needed
 	 * attributes of the class
-	 * 
 	 * @param n size of the n^2 matrices
 	 * @throws Exception if less than 0
 	 */
@@ -24,7 +30,13 @@ public class Graph<T> {
 		nodes = new ArrayList<GraphNode<T>>();
 		edges = new boolean[n][n];
 		weight = new double[n][n];
+
+		// Floyd
+		A = new double[n][n];
+		P = new int[n][n];
 	}
+	
+	//====GETTERS AND SETTERS====
 
 	/**
 	 * returns the list of nodes
@@ -106,7 +118,27 @@ public class Graph<T> {
 		}
 		return INDEX_NOT_FOUND;
 	}
+	
+	/**
+	 * returns the A matrix
+	 * @return
+	 */
+	public double[][] getA() {
+		return A;
+	}
+	
+	/**
+	 * returns the P matrix
+	 * @return
+	 */
+	public int[][] getP() {
+		return P;
+	}
+	
+	//====END GETTERS AND SETTERS====
 
+	//====EDIT GRAPH METHODS====
+	
 	/**
 	 * adds a node setting the value for edges and weight to the default ones
 	 * 
@@ -213,6 +245,10 @@ public class Graph<T> {
 			weight[index][index] = weight[getSize()][getSize()];
 		}
 	}
+	
+	//====END EDIT GRAPH METHODS====
+	
+	//====LOGIC FOR NODES METHODS====
 
 	/**
 	 * checks if a node is drain node, which means that the output degree = 0 and
@@ -303,6 +339,7 @@ public class Graph<T> {
 		}
 		return counter;
 	}
+	
 
 	/**
 	 * prints all the nodes calling the print of each one
@@ -312,5 +349,127 @@ public class Graph<T> {
 			node.print();
 		}
 	}
+	
+	//====END LOGIC FOR NODES METHODS====
+	
+	//====TRAVERSE DEEP FIRST====
 
+	/**
+	 * 1 sets all nodes to visited
+	 * 2 sets the value of the current index
+	 * 3 returns null if not found, print string otherwise
+	 * 
+	 * @param element
+	 * @return
+	 * @throws Exception
+	 */
+	public String traverseGraphDF(T element) throws Exception {
+		// 1
+		for (GraphNode<T> node : nodes) {
+			node.setVisited(false);
+		}
+		// 2
+		int currentIndex = getNode(element);
+		// 3
+		return currentIndex == INDEX_NOT_FOUND ? null : DFPrint(currentIndex);
+
+	}
+
+	/**
+	 * 1 sets this node to visited 
+	 * 2 gets the string representation and saves it 
+	 * 3 checks if there is a child 
+	 * 4 checks if the child has been visited 
+	 * 5 calls the method again to check for child of the child 
+	 * @param currentIndex
+	 * @return
+	 */
+	private String DFPrint(int currentIndex) {
+		// 1
+		nodes.get(currentIndex).setVisited(true);
+		// 2
+		String aux = nodes.get(currentIndex).getElement().toString()+"-";
+		for (int i = 0; i < nodes.size(); i++) {
+			// 3
+			if (edges[currentIndex][i]) {
+				// 4
+				if (!nodes.get(i).isVisited()) {
+					// 5
+					aux += DFPrint(i);
+				}
+			}
+		}
+		return aux;
+	}
+	
+	//====END TRAVERSE DEEP FIRST====
+	
+	//====FLOYD METHODS====
+
+	/**
+	 * 1 goes through both matrices 
+	 * 2 filling with 0 the diagonal as cost from node to same node is 0 
+	 * 3 filling with weight where and edge exists 
+	 * 4 filling with INFINITE if the edge doesn't exist 
+	 * 5 filling with EMPTY all the P matrix
+	 */
+	private void initsFloyd() {
+		// 1
+		for (int i = 0; i < getSize(); i++) {
+			for (int j = 0; j < getSize(); j++) {
+				
+				// 3
+				if (edges[i][j]) {
+					A[i][j] = weight[i][j];
+				}
+				// 4
+				else {
+					A[i][j] = INFINITE;
+				}
+				// 5
+				P[i][j] = EMPTY;
+				
+				// 2
+				if (i == j) {
+					A[i][j] = 0;
+				}
+			}
+			
+			
+		}
+	}
+
+	/**
+	 * 1 iterates over all the nodes
+	 * 2 iterates over the matrix first position in [i][]
+	 * 3 iterates over the matrix second position in [][j]
+	 * 4 if cost using intermediate node is less than from i to j
+	 * 5 update A and P
+	 * @param iteractions
+	 */
+	public void floyd(int iterations/* also means the intermediate node */) {
+		initsFloyd();
+		// 1
+		for (int k = 0; k < iterations; k++) {
+			// 2
+			for (int i = 0; i < getSize(); i++) {
+				// 3
+				for (int j = 0; j < getSize(); j++) {
+					// 4
+					if(A[i][k] + A[k][j] < A[i][j]) {
+						// 5
+						A[i][j] = A[i][k] + A[k][j];
+						P[i][j] = k;
+					}
+				}
+			}
+		}
+	}
+
+	public String printFloydPath(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//====END FLOYD METHODS====
 }
