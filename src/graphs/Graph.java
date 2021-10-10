@@ -233,7 +233,8 @@ public class Graph<T> {
 		if (getNode(element) == INDEX_NOT_FOUND) {
 			throw new Exception("The node asked does not exit");
 		}
-		nodes.remove(index);
+		nodes.set(index, nodes.get(getSize()-1));
+		nodes.remove(getSize()-1);
 		if (index != getSize()) {
 			for (int j = 0; j < getSize(); j++) {
 				edges[j][index] = edges[j][getSize()];
@@ -371,7 +372,10 @@ public class Graph<T> {
 		// 2
 		int currentIndex = getNode(element);
 		// 3
-		return currentIndex == INDEX_NOT_FOUND ? null : DFPrint(currentIndex);
+		if (currentIndex == INDEX_NOT_FOUND) {
+			return null;
+		}
+		return DFPrint(currentIndex);
 
 	}
 
@@ -388,7 +392,7 @@ public class Graph<T> {
 		// 1
 		nodes.get(currentIndex).setVisited(true);
 		// 2
-		String aux = nodes.get(currentIndex).getElement().toString()+"-";
+		String aux = nodes.get(currentIndex).getElement()+"-";
 		for (int i = 0; i < nodes.size(); i++) {
 			// 3
 			if (edges[currentIndex][i]) {
@@ -466,9 +470,39 @@ public class Graph<T> {
 		}
 	}
 
-	public String printFloydPath(String string, String string2) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * public method that calls floyd to set up the path
+	 * returns the
+	 * @param departure
+	 * @param arrival
+	 * @return
+	 * @throws Exception
+	 */
+	public String printFloydPath(T departure, T arrival) throws Exception {
+		floyd(getSize());
+		String aux = printPath(departure, arrival);
+		return aux;
+	}
+
+	/**
+	 * 1 gets the path value from departure to arrival
+	 * 2 checks if there is a path
+	 * 3 uses recursion to get all the nodes of the path
+	 * @param i
+	 * @param j
+	 */
+	private String printPath(T departure, T arrival) throws Exception {
+		String aux = "";
+		// 1
+		int k = P[getNode(departure)][getNode(arrival)];
+		// 2
+		if (k != EMPTY) {
+			// 3
+			aux += printPath(departure, nodes.get(k).getElement());
+			aux += nodes.get(k).getElement();
+			aux += printPath(nodes.get(k).getElement(), arrival);
+		}
+		return aux;
 	}
 	
 	//====END FLOYD METHODS====
