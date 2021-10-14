@@ -12,7 +12,6 @@ public class Graph<T> {
 	// Floyd Matrices
 	protected double[][] A;// cost matrix
 	protected int[][] P;// pathway matrix
-<<<<<<< HEAD
 	// End Foyd constants
 	
 	// Dijkstra constants
@@ -21,10 +20,6 @@ public class Graph<T> {
 	// End Dijkstra costants
 	
 	public static double INFINITE = Double.POSITIVE_INFINITY;
-=======
-	// Foyd constants
-	public static double INFINITE = Double.MAX_VALUE;
->>>>>>> dad35518861511020e16edda6dc675cbd2635852
 	public int EMPTY = -1;
 
 	/**
@@ -45,13 +40,10 @@ public class Graph<T> {
 		// Floyd
 		A = new double[n][n];
 		P = new int[n][n];
-<<<<<<< HEAD
 		
 		// Dijkstra
 		D = new double[n];
 		PD = new int[n];
-=======
->>>>>>> dad35518861511020e16edda6dc675cbd2635852
 	}
 	
 	//====GETTERS AND SETTERS====
@@ -456,11 +448,6 @@ public class Graph<T> {
 					A[i][j] = 0;
 				}
 			}
-<<<<<<< HEAD
-=======
-			
-			
->>>>>>> dad35518861511020e16edda6dc675cbd2635852
 		}
 	}
 
@@ -527,7 +514,6 @@ public class Graph<T> {
 	}
 	
 	//====END FLOYD METHODS====
-<<<<<<< HEAD
 	
 	//====DIJKSTRA METHODS====
 	
@@ -640,6 +626,4 @@ public class Graph<T> {
 	
 	//====END DIJKSTRA METHODS====
 	
-=======
->>>>>>> dad35518861511020e16edda6dc675cbd2635852
 }
