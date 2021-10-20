@@ -528,6 +528,9 @@ public class Graph<T> {
 	 * @param elementIndex
 	 */
 	public void initDijkstra(int elementIndex) {
+		D = new double[getSize()];
+		PD = new int[getSize()];
+		
 		for (int i = 0; i < getSize(); i++) {
 			for (int j = 0; j < getSize(); j++) {
 				// 2
