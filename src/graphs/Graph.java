@@ -1,6 +1,7 @@
 package graphs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Graph<T> {
 	protected ArrayList<GraphNode<T>> nodes;
@@ -526,30 +527,50 @@ public class Graph<T> {
 	 * 3 place the index of the element(going from the element to itself)
 	 * 
 	 * @param elementIndex
+	 * @throws Exception 
 	 */
-	public void initDijkstra(int elementIndex) {
+	public void initDijkstra(int elementIndex) throws Exception {
 		D = new double[getSize()];
 		PD = new int[getSize()];
 		
 		for (int i = 0; i < getSize(); i++) {
-			for (int j = 0; j < getSize(); j++) {
-				// 2
-				if (edges[i][j]) {
-					D[i] = weight[i][j];
-					PD[i] = j;
+			if(!existsEdge(nodes.get(elementIndex).getElement(), nodes.get(i).getElement())) {
+				D[i] = INFINITE;
+				PD[i] = EMPTY;
+			} else {
+					D[i] = weight[elementIndex][i];
+					PD[i] = elementIndex;
 				}
-				// 1
-				else {
-					D[i] = INFINITE;
-					PD[i] = EMPTY;
-				}
-				// 3
-				if (i == j) {
-					D[i] = 0;
-					PD[i] = i;
-				}
+		}
+
+		D[elementIndex] = 0;
+		
+		PD[elementIndex] = 0;
+		
+	}
+	
+	public void initsDijkstra(int elementIndex) throws Exception {
+		
+		D = new double[nodes.size()];
+		PD = new int[nodes.size()];
+		
+		for(int i = 0; i < getSize(); i++) {
+			if(!existsEdge(nodes.get(elementIndex).getElement(), nodes.get(i).getElement())) {
+				
+				D[i]=INFINITE;
+				PD[i] = -1;
+			}
+			else {
+				D[i] = weight[elementIndex][i];
+				PD[i] = elementIndex;
 			}
 		}
+		
+		D[elementIndex] = 0;
+		
+		PD[elementIndex] = 0;
+		
+		
 	}
 	
 	
@@ -585,7 +606,7 @@ public class Graph<T> {
 		int pivot = getPivot();
 		
 		//3 while valid pivot
-		while(pivot != EMPTY) {
+		while(pivot != INDEX_NOT_FOUND) {
 			
 			//4 add current pivot to S
 			nodes.get(pivot).setVisited(true);
@@ -594,9 +615,9 @@ public class Graph<T> {
 			for(int i = 0; i < getSize(); i++) {
 				//6 check if there is path from element to i using the pivot
 				//  cheaper than the cost from element to i
-				if(edges[index][pivot] && edges[pivot][i] && (D[pivot] + weight[i][pivot]) < D[i]) {
+				if(edges[pivot][i] && (D[pivot] + weight[pivot][i]) < D[i]) {
 					//7 update D and PD
-					D[i] = D[pivot] + weight[i][pivot];
+					D[i] = D[pivot] + weight[pivot][i];
 					PD[i] = pivot;
 				}
 			}
@@ -604,6 +625,7 @@ public class Graph<T> {
 			pivot = getPivot();
 		}
 		
+
 		return D;
 	}
 	
@@ -615,7 +637,7 @@ public class Graph<T> {
 	private int getPivot() {
 		double cost = INFINITE;
 		
-		int pivot = EMPTY;
+		int pivot = INDEX_NOT_FOUND;
 		for (int i = 0; i < getSize(); i++) {
 			//cheapest cost and not in S
 			if((D[i] < cost) && !nodes.get(i).isVisited()) {
