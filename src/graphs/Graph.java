@@ -803,9 +803,83 @@ public class Graph<T> {
 	}
 	
 	//====END STRONGLY CONNECTED====
+
+	//====CENTER RELATED METHODS====
 	
+	/**
+	 * Returns the center of the graph which is the one with the minExcentricity
+	 * @return
+	 * @throws Exception
+	 */
+	public T getCenter() throws Exception {
+		floyd(getSize(), this.weight);
+		int centro = -1;
+		double minExcentricity = Double.POSITIVE_INFINITY;
+		for(int i = 0; i < getSize(); i++){
+			if(excentricity(nodes.get(i).getElement())<minExcentricity){
+				minExcentricity = excentricity(nodes.get(i).getElement());
+				centro=i;
+			}
+		}
+		return nodes.get(centro).getElement();
+	}
 	
-	//!TODO getCenter()
+	/**
+	 * Returns the maximum cost of reaching any other nodes from the node n
+	 * @param source
+	 * @return
+	 * @throws Exception
+	 */
+	public double excentricity (T source) throws Exception {
+		double excentricity = -1;
+		floyd(getSize(), this.weight);
+		if(source!=null && !(getNode(source) == INDEX_NOT_FOUND)){
+			for(int i = 0; i < getSize(); i++){
+				if(A[i][getNode(source)] > excentricity){
+					excentricity = A[i][getNode(source)];
+				}
+			}
+		}
+		return excentricity;
+	}
+
+	//====END CENTER RELATED METHODS====
 	
-	//!TODO reciprocity number of reciprocal edge divided by number of edges
+	//TODO reciprocity number of reciprocal edge divided by number of edges
+
+	//====RECIPROCITY====
+
+	public double reciprocity() {
+		return getReciprocal() / getAllEdges();
+	}
+
+	private int getReciprocal() {
+		int result = 0;
+		for(int i = 0; i < getSize(); i++){
+			for(int j = 0; j < getSize(); j++){
+				if(edges[i][j] == true && edges[j][i] == true){
+					result++;
+				}
+			}
+		}
+
+		return result;
+	}
+
+
+	private int getAllEdges() {
+		int result = 0;
+		for(int i = 0; i < getSize(); i++){
+			for(int j = 0; j < getSize(); j++){
+				if(edges[i][j]){
+					result++;
+				}
+			}
+		}
+
+		return result;
+	}
+
+
+	//====END RECIPROCITY====
 }
