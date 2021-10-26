@@ -154,7 +154,7 @@ public class L5_Floyd_EvalTest {
 				{ Graph.INFINITE, Graph.INFINITE, Graph.INFINITE, 02.0, Graph.INFINITE, 00.0 } }, g.getA());
 
 		try {
-			assertEquals("V1V3V5V6", "V1" + g.printFloydPath("V1", "V6") + "V6");
+			assertEquals("V1-V3-V5-V6", g.printFloydPath("V1", "V6"));
 		} catch (Exception e) {
 			System.out.println("Starting or arrival node does not exists" + e);
 		}
@@ -178,7 +178,7 @@ public class L5_Floyd_EvalTest {
 		} catch (Exception e) {
 			System.out.println("Starting or arrival node does not exists" + e);
 		}
-		assertEquals("DBAC", "D" + g1.printFloydPath("D", "C") + "C");
+		assertEquals("D-B-A-C", g1.printFloydPath("D", "C"));
 	}
 
 	@Test
@@ -279,10 +279,10 @@ public class L5_Floyd_EvalTest {
 				{ -1, 0, 4, -1, -1, -1 }, { 3, 3, -1, 2, -1, 3 }, { -1, 0, 4, -1, 0, -1 } }, g.getP());
 
 		try {
-			assertEquals("SpainVenezuelaPolandJapan", "Spain" + g.printFloydPath("Spain", "Japan") + "Japan");
-			assertEquals("SpainGreeceUK", "Spain" + g.printFloydPath("Spain", "UK") + "UK");
-			assertEquals("SpainVenezuelaPoland", "Spain" + g.printFloydPath("Spain", "Poland") + "Poland");
-			assertEquals("PolandSpainVenezuela", "Poland" + g.printFloydPath("Poland", "Venezuela") + "Venezuela");
+			assertEquals("Spain-Venezuela-Poland-Japan", g.printFloydPath("Spain", "Japan"));
+			assertEquals("Spain-Greece-UK", g.printFloydPath("Spain", "UK"));
+			assertEquals("Spain-Venezuela-Poland", g.printFloydPath("Spain", "Poland"));
+			assertEquals("Poland-Spain-Venezuela", g.printFloydPath("Poland", "Venezuela"));
 
 		} catch (Exception e) {
 			System.out.println("Starting or arrival node does not exists" + e);
@@ -318,10 +318,10 @@ public class L5_Floyd_EvalTest {
 				{ -1, 0, -1, -1, -1, -1 }, { -1, 0, -1, -1, -1, 3 }, { -1, 0, 4, -1, 0, -1 } }, g.getP());
 
 		try {
-			assertEquals("SpainVenezuelaPolandJapan", "Spain" + g.printFloydPath("Spain", "Japan") + "Japan");
-			assertEquals("SpainUK", "Spain" + g.printFloydPath("Spain", "UK") + "UK");
-			assertEquals("SpainVenezuelaPoland", "Spain" + g.printFloydPath("Spain", "Poland") + "Poland");
-			assertEquals("PolandSpainVenezuela", "Poland" + g.printFloydPath("Poland", "Venezuela") + "Venezuela");
+			assertEquals("Spain-Venezuela-Poland-Japan", g.printFloydPath("Spain", "Japan"));
+			assertEquals("Spain-UK", g.printFloydPath("Spain", "UK"));
+			assertEquals("Spain-Venezuela-Poland", g.printFloydPath("Spain", "Poland"));
+			assertEquals("Poland-Spain-Venezuela", g.printFloydPath("Poland", "Venezuela"));
 		} catch (Exception e) {
 			System.out.println("Starting or arrival node does not exists" + e);
 		}
@@ -357,10 +357,10 @@ public class L5_Floyd_EvalTest {
 				{ -1, 0, -1, -1, -1, -1 }, { -1, 0, -1, -1, -1, 3 }, { -1, 0, 4, -1, 0, -1 } }, g.getP());
 
 		try {
-			assertEquals("SpainJapan", "Spain" + g.printFloydPath("Spain", "Japan") + "Japan");
-			assertEquals("SpainUK", "Spain" + g.printFloydPath("Spain", "UK") + "UK");
-			assertEquals("SpainVenezuelaPoland", "Spain" + g.printFloydPath("Spain", "Poland") + "Poland");
-			assertEquals("PolandSpainVenezuela", "Poland" + g.printFloydPath("Poland", "Venezuela") + "Venezuela");
+			assertEquals("Spain-Japan",g.printFloydPath("Spain", "Japan"));
+			assertEquals("Spain-UK", g.printFloydPath("Spain", "UK"));
+			assertEquals("Spain-Venezuela-Poland", g.printFloydPath("Spain", "Poland"));
+			assertEquals("Poland-Spain-Venezuela", g.printFloydPath("Poland", "Venezuela"));
 		} catch (Exception e) {
 			System.out.println("Starting or arrival node does not exists" + e);
 		}

@@ -1,12 +1,13 @@
 package graphs;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
 
-public class Graph<T> {
+public class UndirectedGraph<T> {
 	protected ArrayList<GraphNode<T>> nodes;
 	protected boolean[][] edges;
 	protected double[][] weight;
@@ -32,7 +33,7 @@ public class Graph<T> {
 	 * @param n size of the n^2 matrices
 	 * @throws Exception if less than 0
 	 */
-	public Graph(int n) throws Exception {
+	public UndirectedGraph(int n) throws Exception {
 		if (n < 0) {
 			throw new Exception("Invalid value for n");
 		}
@@ -187,10 +188,12 @@ public class Graph<T> {
 	 * @throws Exception if one of the nodes does not exist
 	 */
 	public boolean existsEdge(T origin, T dest) throws Exception {
-		if (getNode(origin) == INDEX_NOT_FOUND || getNode(dest) == INDEX_NOT_FOUND)
+		if (getNode(origin) == INDEX_NOT_FOUND || getNode(dest) == INDEX_NOT_FOUND) {
 			throw new Exception("Origin or dest doesnt exist.");
-		if (!edges[getNode(origin)][getNode(dest)])
+		}
+		if (!edges[getNode(origin)][getNode(dest)]) {
 			return false;
+		}
 
 		return true;
 	}
@@ -205,13 +208,17 @@ public class Graph<T> {
 	 *                   the nodes does not exist
 	 */
 	public void addEdge(T origin, T dest, double nWeight) throws Exception {
-		if (origin == null || dest == null || nWeight < 0)
+		if (origin == null || dest == null || nWeight < 0) {
 			throw new Exception("Origin or dest are null or weight lower than 0.");
-		if (getNode(origin) == INDEX_NOT_FOUND || getNode(dest) == INDEX_NOT_FOUND)
+		}
+		if (getNode(origin) == INDEX_NOT_FOUND || getNode(dest) == INDEX_NOT_FOUND) {
 			throw new Exception("Origin or dest doesnt exist.");
+		}
 
 		edges[getNode(origin)][getNode(dest)] = true;
 		weight[getNode(origin)][getNode(dest)] = nWeight;
+		edges[getNode(dest)][getNode(origin)] = true;
+		weight[getNode(dest)][getNode(origin)] = nWeight;
 
 	}
 
@@ -230,6 +237,8 @@ public class Graph<T> {
 		if (existsEdge(origin, dest)) {
 			edges[getNode(origin)][getNode(dest)] = false;
 			weight[getNode(origin)][getNode(dest)] = 0.0;
+			edges[getNode(dest)][getNode(origin)] = false;
+			weight[getNode(dest)][getNode(origin)] = 0.0;
 		} else {
 			throw new IllegalArgumentException("the edge does not exist");
 		}
@@ -724,7 +733,7 @@ public class Graph<T> {
 	}
 	
 	/**
-	 * return index of the node with cheapest cost from the element and not in S
+	 * returns index of the node with cheapest cost from the element and not in S
 	 * returns empty if pivot is not found
 	 * @return
 	 */
@@ -790,22 +799,18 @@ public class Graph<T> {
 	 * @return
 	 */
 	public boolean isStronglyConnected() {
-		boolean result = true;
 		floyd(getSize());
 		for (int i = 0; i < P.length; i++) {
 			for (int j = 0; j < P.length; j++) {
 				if(P[i][j] == EMPTY) {
-					result = false;
+					return false;
 				}
 			}
 		}
-		return result;
+		return true;
 	}
 	
 	//====END STRONGLY CONNECTED====
 	
-	
-	//!TODO getCenter()
-	
-	//!TODO reciprocity number of reciprocal edge divided by number of edges
+
 }
