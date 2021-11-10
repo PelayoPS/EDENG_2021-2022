@@ -1,8 +1,8 @@
 package trees;
 
-public class BSTNode<T extends Comparable<T>> {
+public class AVLNode<T extends Comparable<T>> {
 	private T element;
-	private BSTNode<T> left, right;
+	private AVLNode<T> left, right;
 	private int height;
 
 
@@ -11,7 +11,7 @@ public class BSTNode<T extends Comparable<T>> {
 	 * 
 	 * @param element2
 	 */
-	public BSTNode(T element2) {
+	public AVLNode(T element2) {
 		this.element = element2;
 		this.left = null;
 		this.right = null;
@@ -40,7 +40,7 @@ public class BSTNode<T extends Comparable<T>> {
 	 * 
 	 * @return
 	 */
-	public BSTNode<T> getLeft() {
+	public AVLNode<T> getLeft() {
 		return left;
 	}
 
@@ -49,7 +49,7 @@ public class BSTNode<T extends Comparable<T>> {
 	 * 
 	 * @param left
 	 */
-	public void setLeft(BSTNode<T> left) {
+	public void setLeft(AVLNode<T> left) {
 		this.left = left;
 	}
 
@@ -58,7 +58,7 @@ public class BSTNode<T extends Comparable<T>> {
 	 * 
 	 * @return
 	 */
-	public BSTNode<T> getRight() {
+	public AVLNode<T> getRight() {
 		return right;
 	}
 
@@ -67,7 +67,7 @@ public class BSTNode<T extends Comparable<T>> {
 	 * 
 	 * @param right
 	 */
-	public void setRight(BSTNode<T> right) {
+	public void setRight(AVLNode<T> right) {
 		this.right = right;
 	}
 	
@@ -101,4 +101,19 @@ public class BSTNode<T extends Comparable<T>> {
 			}
 		}
 	}
+
+	
+	public int getBF() {		
+		int right = 0;
+		int left = 0;
+		if (getRight() == null && getLeft() != null) {
+			right = getLeft().getHeight() - 1;
+		}
+		if (getRight() != null && getLeft() == null) {
+			left =  getRight().getHeight() + 1;
+		}
+		return right - left;
+	}
+	
+	
 }
