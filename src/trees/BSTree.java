@@ -1,5 +1,6 @@
 package trees;
 
+
 public class BSTree<T extends Comparable<T>> {
 
 	private BSTNode<T> root;
@@ -66,6 +67,7 @@ public class BSTree<T extends Comparable<T>> {
 			theRoot.setRight(add(element, theRoot.getRight()));
 		}
 		// 6
+		updateHeight(theRoot);
 		return theRoot;
 	}
 	
@@ -87,7 +89,7 @@ public class BSTree<T extends Comparable<T>> {
 			result.append("-");
 		} else {
 			//Format rootleft...right...
-			result.append(theRoot.toString());
+			result.append(String.format("%s(%d)",theRoot.toString(),theRoot.getHeight()));
 			result.append(toString(theRoot.getLeft()));
 			result.append(toString(theRoot.getRight())); 
 		}
@@ -140,5 +142,69 @@ public class BSTree<T extends Comparable<T>> {
 		
 		return false;
 	}
+	
+	public T getMax(BSTNode<T> theRoot) {
+		while(theRoot.getRight() != null) {
+			theRoot = theRoot.getRight();
+		}
+		return theRoot.getElement();
+	}
+	
+	
+	/**
+	 * Travels the tree in order to remove a new element
+	 * 
+	 * @param element
+	 * @throws Exception 
+	 */
+	public void remove(T element) throws Exception {
+		root = remove(element, root);
+	}
 
+	
+	private BSTNode<T> remove(T element, BSTNode<T> theRoot) throws Exception {
+		// 1
+		if (theRoot == null) {
+			throw new Exception("Element not found");
+		}
+		// 2
+		T rootElement = theRoot.getElement();
+		// 3
+		if (element.compareTo(rootElement) == 0) {
+			//no child
+			if(theRoot.getLeft() == null && theRoot.getRight() == null) {
+				return null;
+			}
+			//only left child
+			if(!(theRoot.getLeft() == null) && theRoot.getRight() == null) {
+				return theRoot.getLeft();
+			}
+			//only right child
+			if(theRoot.getLeft() == null && !(theRoot.getRight() == null)) {
+				return theRoot.getRight();
+			}
+			//both children
+			if(!(theRoot.getLeft() == null) && !(theRoot.getRight() == null)) {
+				theRoot.setElement(getMax(theRoot.getLeft()));
+				theRoot.setLeft(remove(theRoot.getElement(),theRoot.getLeft()));
+			}
+						
+		}
+		// 4
+		if (element.compareTo(rootElement) < 0) {
+			theRoot.setLeft(remove(element, theRoot.getLeft()));
+		}
+		// 5
+		if (element.compareTo(rootElement) > 0) {
+			theRoot.setRight(remove(element, theRoot.getRight()));
+		}
+		// 6
+		updateHeight(theRoot);
+		return theRoot;
+	}
+	
+	private void updateHeight(BSTNode<T> theRoot) {
+		theRoot.updateHeight();
+	}
+	
 }

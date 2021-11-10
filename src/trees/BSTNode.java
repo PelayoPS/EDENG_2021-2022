@@ -3,6 +3,8 @@ package trees;
 public class BSTNode<T extends Comparable<T>> {
 	private T element;
 	private BSTNode<T> left, right;
+	private int height;
+
 
 	/**
 	 * Default constructor for the BSTNode
@@ -11,6 +13,8 @@ public class BSTNode<T extends Comparable<T>> {
 	 */
 	public BSTNode(T element2) {
 		this.element = element2;
+		this.left = null;
+		this.right = null;
 	}
 
 	/**
@@ -69,5 +73,37 @@ public class BSTNode<T extends Comparable<T>> {
 	
 	public String toString() {
 		return getElement().toString();
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public void updateHeight() {
+		if(getLeft() != null) {
+			if(getLeft().getHeight() == 0) {
+				setHeight(getHeight() + 1);
+			}else {
+			setHeight(getLeft().getHeight() + getHeight());
+			}
+		}
+		if(getRight() != null) {
+			if(getRight().getHeight() == 0) {
+				setHeight(getHeight() + 1);
+			}else {
+			setHeight(getRight().getHeight() + getHeight());
+			}
+		}
+		if(getRight() != null && getLeft() != null) {
+			if(getRight().getHeight() == 0 && getLeft().getHeight() == 0) {
+				setHeight(getHeight() + 1);
+			} else {
+				setHeight(Math.max(getLeft().getHeight(), getRight().getHeight()));
+			}
+		}
 	}
 }

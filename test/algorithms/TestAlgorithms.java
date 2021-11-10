@@ -1,4 +1,4 @@
-package test.algorithms;
+package algorithms;
 
 
 import static org.junit.Assert.assertEquals;
