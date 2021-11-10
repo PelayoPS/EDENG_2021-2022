@@ -212,14 +212,14 @@ public class AVLTree<T extends Comparable<T>> {
 			if(theRoot.getLeft().getBF() == 1) {
 				theRoot = singleLeftRotation(theRoot);
 			} else {
-				doubleLeftRotation(theRoot);
+				theRoot = doubleLeftRotation(theRoot);
 			}
 		}
 		if (theRoot.getBF() == 2) {
 			if(theRoot.getRight().getBF() >= 0 ) {
 				theRoot = singleRightRotation(theRoot);
 			} else {
-				doubleRightRotation(theRoot);
+				theRoot = doubleRightRotation(theRoot);
 			}
 		}
 		theRoot.updateHeight();
