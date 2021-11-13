@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import graphs.Graph;
-
 public class L5_Floyd_EvalTest {
 
 	@Test
@@ -357,7 +355,7 @@ public class L5_Floyd_EvalTest {
 				{ -1, 0, -1, -1, -1, -1 }, { -1, 0, -1, -1, -1, 3 }, { -1, 0, 4, -1, 0, -1 } }, g.getP());
 
 		try {
-			assertEquals("Spain-Japan",g.printFloydPath("Spain", "Japan"));
+			assertEquals("Spain-Japan", g.printFloydPath("Spain", "Japan"));
 			assertEquals("Spain-UK", g.printFloydPath("Spain", "UK"));
 			assertEquals("Spain-Venezuela-Poland", g.printFloydPath("Spain", "Poland"));
 			assertEquals("Poland-Spain-Venezuela", g.printFloydPath("Poland", "Venezuela"));
