@@ -13,8 +13,6 @@ public class AVLNode<T extends Comparable<T>> {
 	 */
 	public AVLNode(T element2) {
 		this.element = element2;
-		this.left = null;
-		this.right = null;
 	}
 
 	/**
@@ -70,49 +68,104 @@ public class AVLNode<T extends Comparable<T>> {
 	public void setRight(AVLNode<T> right) {
 		this.right = right;
 	}
-	
-	public String toString() {
-		return getElement().toString();
+
+	/**
+	 * returns true when the node has a left child
+	 */
+	private boolean hasLeft() {
+		return this.left != null;
 	}
 	
+	/**
+	 * returns true when the node has a right child
+	 */
+	private boolean hasRight() {
+		return this.right != null;
+	}
+	
+	/**
+	 * returns true when the node has a left and but not a right child
+	 */
+	private boolean hasOnlyLeft() {
+		return hasLeft() && !hasRight();
+	}
+	
+	/**
+	 * returns true when the node has a right and but not a left child
+	 */
+	private boolean hasOnlyRight() {
+		return !hasLeft() && hasRight();
+	}
+	
+	/**
+	 * returns true when the node doesn't have a left or right child
+	 */
+	private boolean hasNochild() {
+		return right == null && left == null;
+	}
+	
+	/**
+	 * returns true when the node has a left and a right child
+	 */
+	private boolean hasTwochildren() {
+		return right != null && left != null;
+	}
+	
+	/**
+	 * Returns a String representing the element
+	 */
+	public String toString() {
+		return getElement().toString()  + "(" + getBF() + ")";
+	}
+	
+	/**
+	 * returns the height of the node
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * sets the height of the node
+	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
+	/**
+	 * updates the height of the node
+	 */
 	public void updateHeight() {
-		if (getRight() == null && getLeft() == null) {
-			setHeight(0);
+		if (hasNochild()) {
+			setHeight(0);// leaf
 		}
-		if (getRight() == null && getLeft() != null) {
-			setHeight(getLeft().getHeight() + 1);
-		} 
-		if (getRight() != null && getLeft() == null) {
-			setHeight(getRight().getHeight() + 1);
+		if (hasOnlyLeft()) {
+			setHeight(getLeft().getHeight() + 1);// left child
+		} else if (hasOnlyRight()) {
+			setHeight(getRight().getHeight() + 1);// right child
 		}
-		if (getRight() != null && getLeft() != null) {
+		if (hasTwochildren()) {
 			if (getRight().getHeight() > getLeft().getHeight()) {
-				setHeight(getRight().getHeight() + 1);
+				setHeight(getRight().getHeight() + 1);//right height is greater
 			} else {
-				setHeight(getLeft().getHeight() + 1);
+				setHeight(getLeft().getHeight() + 1);//left height is greater
 			}
 		}
 	}
 
-	
-	public int getBF() {		
+	/**
+	 * returns the balance factor of the node
+	 */
+	public int getBF() {
 		int right = 0;
 		int left = 0;
-		if (getRight() == null && getLeft() != null) {
-			right = getLeft().getHeight() - 1;
+		if (hasRight()) {
+			right = getRight().getHeight() + 1;// adds one if only right child
 		}
-		if (getRight() != null && getLeft() == null) {
-			left =  getRight().getHeight() + 1;
+		if (hasLeft()) {
+			left =  getLeft().getHeight() + 1;// substract one if only left child
 		}
-		return right - left;
+		return right - left;// returns the difference
 	}
 	
 	

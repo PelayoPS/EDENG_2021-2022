@@ -71,30 +71,6 @@ public class AVLTree<T extends Comparable<T>> {
 		return updateBF(theRoot);
 	}
 	
-	/**
-	 * Returns a string representation of the tree
-	 */
-	public String toString() {
-		return toString(this.root);
-	}
-	
-	/**
-	 * Recursive method for the toString  
-	 * @param theRoot
-	 * @return
-	 */
-	private String toString(AVLNode<T> theRoot) {
-		StringBuilder result = new StringBuilder();
-		if (theRoot == null) {
-			result.append("-");
-		} else {
-			//Format rootleft...right...
-			result.append(String.format("%s(%d)",theRoot.toString(),theRoot.getBF()));
-			result.append(toString(theRoot.getLeft()));
-			result.append(toString(theRoot.getRight())); 
-		}
-		return result.toString();
-	}
 	
 	/**
 	 * Travels the tree and returns true when the element is found
@@ -143,13 +119,18 @@ public class AVLTree<T extends Comparable<T>> {
 		return false;
 	}
 	
+	
+	/**
+	 * returns the max in the tree
+	 * @param theRoot
+	 * @return
+	 */
 	public T getMax(AVLNode<T> theRoot) {
 		while(theRoot.getRight() != null) {
 			theRoot = theRoot.getRight();
 		}
 		return theRoot.getElement();
 	}
-	
 	
 	/**
 	 * Travels the tree in order to remove a new element
@@ -161,7 +142,22 @@ public class AVLTree<T extends Comparable<T>> {
 		root = remove(element, root);
 	}
 
-	
+	/**
+	 * Private method that removes the element.
+	 * 1 if null then return null
+	 * 2 keeps the element in a variable
+	 * 3 if the element is equal to theRoot element then
+	 * 		return theRoot.getLeft()
+	 * 4 if the element is less than theRoot element then
+	 * 		setLeft of theRoot and call remove to check child
+	 * 5 if the element is greater than theRoot element then
+	 * 		setRight of theRoot and call remove to check child
+	 * 6 if theRoot not null return itself
+	 * @param element
+	 * @param theRoot
+	 * @return
+	 * @throws Exception 
+	 */
 	private AVLNode<T> remove(T element, AVLNode<T> theRoot) throws Exception {
 		// 1
 		if (theRoot == null) {
@@ -176,15 +172,15 @@ public class AVLTree<T extends Comparable<T>> {
 				return null;
 			}
 			//only left child
-			if(!(theRoot.getLeft() == null) && theRoot.getRight() == null) {
+			if(theRoot.getLeft() != null && theRoot.getRight() == null) {
 				return theRoot.getLeft();
 			}
 			//only right child
-			if(theRoot.getLeft() == null && !(theRoot.getRight() == null)) {
+			if(theRoot.getLeft() == null && theRoot.getRight() != null) {
 				return theRoot.getRight();
 			}
 			//both children
-			if(!(theRoot.getLeft() == null) && !(theRoot.getRight() == null)) {
+			if(theRoot.getLeft() != null && theRoot.getRight() != null) {
 				theRoot.setElement(getMax(theRoot.getLeft()));
 				theRoot.setLeft(remove(theRoot.getElement(),theRoot.getLeft()));
 			}
@@ -203,13 +199,22 @@ public class AVLTree<T extends Comparable<T>> {
 		return updateBF(theRoot);
 	}
 	
+	/**
+	 * Private method that updates the height of the tree using the root
+	 * @param theRoot
+	 */
 	private void updateHeight(AVLNode<T> theRoot) {
 		theRoot.updateHeight();
 	}
 	
+	/**
+	 * Private method that updates the balance factor of the tree using the root
+	 * @param theRoot
+	 * @return
+	 */
 	private AVLNode<T> updateBF (AVLNode<T> theRoot) {
 		if (theRoot.getBF() == -2) {
-			if(theRoot.getLeft().getBF() == 1) {
+			if(theRoot.getLeft().getBF() <= 0) {
 				theRoot = singleLeftRotation(theRoot);
 			} else {
 				theRoot = doubleLeftRotation(theRoot);
@@ -226,7 +231,13 @@ public class AVLTree<T extends Comparable<T>> {
 		return theRoot;
 	}
 	
+
 	
+	/**
+	 * Private method that rotates the tree to the left
+	 * @param theRoot
+	 * @return
+	 */
 	private AVLNode<T> singleLeftRotation (AVLNode<T> b) {
 		AVLNode<T> a = b.getLeft();
 		AVLNode<T> c = a.getRight();
@@ -234,8 +245,13 @@ public class AVLTree<T extends Comparable<T>> {
 		b.setLeft(c);
 		b.updateHeight();
 		return a;
-	}	
+	}
 	
+	/**
+	 * Private method that rotates the tree to the right
+	 * @param theRoot
+	 * @return
+	 */
 	private AVLNode<T> singleRightRotation (AVLNode<T> b) {
 		AVLNode<T> a = b.getRight();
 		AVLNode<T> c = a.getLeft();
@@ -245,6 +261,11 @@ public class AVLTree<T extends Comparable<T>> {
 		return a;
 	}
 	
+	/**
+	 * Private method that rotates the tree to the left double rotation
+	 * @param theRoot
+	 * @return
+	 */
 	private AVLNode<T> doubleLeftRotation (AVLNode<T> c) {
 		AVLNode<T> a = c.getLeft();
 		AVLNode<T> b = a.getRight();
@@ -258,18 +279,83 @@ public class AVLTree<T extends Comparable<T>> {
 		return b;
 	}
 	
+	
+	/**
+	 * Private method that rotates the tree to the right double rotation
+	 * @param theRoot
+	 * @return
+	 */
 	private AVLNode<T> doubleRightRotation (AVLNode<T> c) {
-		AVLNode<T> a = c.getLeft();
-		AVLNode<T> b = a.getRight();
-		c.setLeft(b.getRight());
-		a.setRight(b.getLeft());
-		b.setLeft(a);
-		b.setRight(c);
+		
+		AVLNode<T> a = c.getRight();
+		AVLNode<T> b = a.getLeft();
+		
+		c.setRight(b.getLeft());
+		a.setLeft(b.getRight());
+		b.setRight(a);
+		b.setLeft(c);
+		
+		
 		b.updateHeight();
 		a.updateHeight();
 		c.updateHeight();
 		return b;
 	}
 	
+	/**
+	 * @return the height of the tree
+	 */
+	public int getHeight() {
+		return getHeight(root) + 1;
+	}
+	
+	/**
+	 * recursive method for the getHeight
+	 * @param theRoot
+	 * @return
+	 */
+	private int getHeight(AVLNode<T> theRoot) {
+		int rightHeight = 0;
+		int leftHeight = 0;
+		if (theRoot.getRight() == null) {
+			rightHeight = 0;
+		} else {
+			rightHeight = getHeight(theRoot.getRight()) + 1;
+		}
+		if (theRoot.getLeft() == null) {
+			leftHeight = 0;
+		} else {
+			leftHeight = getHeight(theRoot.getLeft()) + 1;
+		}
+		if (rightHeight > leftHeight) {
+			return rightHeight;
+		} else {
+			return leftHeight;
+		}
+	}
+	
+	/**
+	 * @return the string representation of the tree
+	 */
+	public String toString() {
+		return toString(this.root);
+	}
+	
+	/**
+	 * recursive method for the toString
+	 * @param theRoot
+	 * @return
+	 */
+	private String toString(AVLNode<T> theRoot) {
+		StringBuilder result = new StringBuilder();
+		if (theRoot == null) {
+			result.append("-");
+		} else {
+			result.append(theRoot.toString()); //+ "(" + theRoot.getBF() + ")");
+			result.append(toString(theRoot.getLeft()));
+			result.append(toString(theRoot.getRight())); 
+		}
+		return result.toString();
+	}
 	
 }

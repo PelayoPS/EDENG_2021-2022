@@ -13,17 +13,17 @@ public class BSTreeTest {
 		BSTree<Character> a = new BSTree<Character>();
 
 		a.add('b');
-		assertEquals ("b--", a.toString());
+		assertEquals ("b(0)--", a.toString());
 		a.add('a');
-		assertEquals ("ba---", a.toString());
+		assertEquals ("b(1)a(0)---", a.toString());
 		a.add('d');
-		assertEquals ("ba--d--", a.toString());
+		assertEquals ("b(1)a(0)--d(0)--", a.toString());
 		a.add('e');
-		assertEquals ("ba--d-e--", a.toString());
+		assertEquals ("b(2)a(0)--d(1)-e(0)--", a.toString());
 		a.add('f');
-		assertEquals ("ba--d-e-f--", a.toString());
+		assertEquals ("b(3)a(0)--d(2)-e(1)-f(0)--", a.toString());
 		a.add('c');
-		assertEquals ("ba--dc--e-f--", a.toString());
+		assertEquals ("b(3)a(0)--d(2)c(0)--e(1)-f(0)--", a.toString());
 		/*
 		 *       b
 		 *      / \

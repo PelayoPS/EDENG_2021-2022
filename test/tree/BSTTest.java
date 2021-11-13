@@ -67,19 +67,19 @@ public class BSTTest {
 		a.add('g');
 		a.add('i');
 		a.add('h');
-		assertEquals ("ba--dc--g-ih---", a.toString());
+		assertEquals ("b(4)a(0)--d(3)c(0)--g(2)-i(1)h(0)---", a.toString());
 	
 		// Scenery III
 		a.remove('d');
-		assertEquals ("ba--c-g-ih---", a.toString());
+		assertEquals ("b(4)a(0)--c(3)-g(2)-i(1)h(0)---", a.toString());
 		
 		// Scenery II
 		a.remove('g');
-		assertEquals ("ba--c-ih---", a.toString());
+		assertEquals ("b(3)a(0)--c(2)-i(1)h(0)---", a.toString());
 				
 		// Scenery I
 		a.remove('a');
-		assertEquals ("b-c-ih---", a.toString());
+		assertEquals ("b(3)-c(2)-i(1)h(0)---", a.toString());
 	}
 	
 	
