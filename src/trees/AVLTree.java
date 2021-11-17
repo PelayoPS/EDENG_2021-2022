@@ -318,20 +318,19 @@ public class AVLTree<T extends Comparable<T>> {
 		int rightHeight = 0;
 		int leftHeight = 0;
 		if (theRoot.getRight() == null) {
-			rightHeight = 0;
+			rightHeight = 0;//if the right chils is null right height is 0
 		} else {
 			rightHeight = getHeight(theRoot.getRight()) + 1;
+			//otherwise it is the height of the right child + 1
 		}
 		if (theRoot.getLeft() == null) {
-			leftHeight = 0;
+			leftHeight = 0;//if the left child is null left height is 0
 		} else {
 			leftHeight = getHeight(theRoot.getLeft()) + 1;
+			//otherwise it is the height of the left child + 1
 		}
-		if (rightHeight > leftHeight) {
-			return rightHeight;
-		} else {
-			return leftHeight;
-		}
+		//return the max of the left and right height
+		return Math.max(rightHeight, leftHeight);
 	}
 	
 	/**
