@@ -850,7 +850,7 @@ public class Graph<T> {
 	//====RECIPROCITY====
 
 	public double reciprocity() {
-		return getReciprocal() / getAllEdges();
+		return 1.0*getReciprocal() / getAllEdges();
 	}
 
 	private int getReciprocal() {

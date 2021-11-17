@@ -871,7 +871,7 @@ public class Graph_Ex_2021_10_27<T> {
 	//====RECIPROCITY====
 
 	public double reciprocity() {
-		return getReciprocal() / getAllEdges();
+		return 1.0*getReciprocal() / getAllEdges();
 	}
 
 	private int getReciprocal() {
