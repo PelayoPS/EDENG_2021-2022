@@ -11,7 +11,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 	}
 
 	/**
-	 * doesnt work
+	 * works
 	 * 
 	 * @param heapInput
 	 */
