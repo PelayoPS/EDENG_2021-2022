@@ -6,12 +6,15 @@ import java.util.Collections;
 public class BinaryHeap<T extends Comparable<T>> {
 	private ArrayList<T> heap;
 
+	/**
+	 * Default constructor
+	 */
 	public BinaryHeap() {
 		heap = new ArrayList<T>();
 	}
 
 	/**
-	 * works
+	 * Constructor that takes an array of objects and turns it into a heap.
 	 * 
 	 * @param heapInput
 	 */
@@ -25,14 +28,25 @@ public class BinaryHeap<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * String representation of the heap
+	 */
 	public String toString() {
 		return heap.toString();
 	}
 
+	/**
+	 * Returns true if the heap is empty
+	 */
 	public boolean isEmpty() {
 		return heap.isEmpty();
 	}
 
+	/**
+	 * Adds an element to the heap
+	 * filterUp is called to ensure the heap property is maintained
+	 * @param element
+	 */
 	public void add(T element) {
 		if (!heap.contains(element)) {
 			heap.add(element);
@@ -40,6 +54,10 @@ public class BinaryHeap<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * Filters the heap from the bottom up
+	 * @param pos
+	 */
 	private void filterUp(int pos) {
 		while (pos > 0 && heap.get(getIndexOfParent(pos)).compareTo(heap.get(pos)) > 0) {
 			Collections.swap(heap, getIndexOfParent(pos), pos);
@@ -47,10 +65,16 @@ public class BinaryHeap<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * Returns the index of the parent of the element at position pos
+	 */
 	private int getIndexOfParent(int pos) {
 		return (pos - 1) / 2;
 	}
 
+	/**
+	 * Returns the element at the top of the heap
+	 */
 	public T getMin() {
 		T root = heap.get(0);
 		T last = heap.remove(heap.size() - 1);
@@ -61,6 +85,10 @@ public class BinaryHeap<T extends Comparable<T>> {
 		return root;
 	}
 
+	/**
+	 * Filters the heap from the top down
+	 * @param pos
+	 */
 	private void filterDown(int pos) {
 		while (!isLeaf(pos)) {
 			int leftChild = pos * 2 + 1;
@@ -80,6 +108,11 @@ public class BinaryHeap<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * Returns true if the element at position pos is a leaf
+	 * @param i
+	 * @return
+	 */
 	private boolean isLeaf(int i) {
 		return i >= heap.size() / 2;
 	}
