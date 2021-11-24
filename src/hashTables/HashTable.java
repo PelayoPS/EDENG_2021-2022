@@ -1,7 +1,5 @@
 package hashTables;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class HashTable<T> {
     
@@ -13,8 +11,6 @@ public class HashTable<T> {
     private int redispersionType;
     private double maxLoadFactor;
     private HashNode<T>[] associativeArray;
-
-
 
 	public HashTable(int size, int redispersionType2, double maxLoadFactor2) {
 		
@@ -34,8 +30,19 @@ public class HashTable<T> {
     			(Math.abs(element.hashCode()) + attempt * attempt) % B;     
     }
 	
+	/**
+	 * apply the f function increasing the number of attempts everytime there is 
+	 * a collision until the element is inserted
+	 * @param element
+	 */
 	public void add(T element) {
-		
+		int attempt = 0;
+		int index = f(element, attempt);
+		while (associativeArray[index].element != null) {
+			attempt++;
+			index = f(element, attempt);
+		}
+		associativeArray[index] = new HashNode(element);
 	}
 	
     public String toString() {
@@ -47,4 +54,31 @@ public class HashTable<T> {
         return aux;
     }
 
+	/**
+	 * returns the load factor of the hash table
+	 * @return
+	 */
+	public double getLF() {
+		int validNodes = 0;
+		for (HashNode<T> hashNode : associativeArray) {
+			if (hashNode.status == HashNode.VALID) {
+				validNodes++;
+			}
+		}
+		return (double) validNodes / associativeArray.length;
+	}
+
+	public boolean search(T element) {
+		int attempt = 0;
+		int index = f(element, attempt);
+		while (associativeArray[index].element != null && 
+			getLF() != 0) {
+			if (associativeArray[index].element.equals(element)) {
+				return true;
+			}
+			attempt++;
+			index = f(element, attempt);
+		}
+		return false;
+	}
 }

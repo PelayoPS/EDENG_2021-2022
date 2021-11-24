@@ -17,4 +17,9 @@ public class HashNode<T> {
         this.element = null;
         this.status = EMPTY;
     }
+    
+    public HashNode(T element2) {
+        this.element = element2;
+        this.status = EMPTY;
+    }
 }

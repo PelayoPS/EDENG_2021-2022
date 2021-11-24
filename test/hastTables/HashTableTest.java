@@ -144,76 +144,76 @@ public class HashTableTest {
 //	}
 //		
 //	
-//	@Test
-//	public void testAddInteger() throws Exception
-//	{
-//		// Example
-//		HashTable<Integer> a = new HashTable<Integer>(5, HashTable.LINEAR_PROBING, 1.0);
-//		a.add(4);
-//		assertEquals (0.2, a.getLF(), 0.1);
-//		a.add(13);
-//		assertEquals (0.4, a.getLF(), 0.1);
-//		a.add(24);
-//		assertEquals (0.6, a.getLF(), 0.1);
-//		a.add(3);
-//		assertEquals (0.8, a.getLF(), 0.1);
-//		
-//		assertEquals("[0] (1) = 24 - [1] (1) = 3 - [2] (0) = null - [3] (1) = 13 - [4] (1) = 4 - ", a.toString());
-//		assertEquals(true, a.search(3));
-//		assertEquals(false, a.search(12));
-//		
-//		a.remove(24);
-//		assertEquals("[0] (2) = 24 - [1] (1) = 3 - [2] (0) = null - [3] (1) = 13 - [4] (1) = 4 - ", a.toString());
-//		
-//		assertEquals(true, a.search(3));
-//		a.add(15);
-//		assertEquals(true, a.search(3));
-//		assertEquals("[0] (1) = 15 - [1] (1) = 3 - [2] (0) = null - [3] (1) = 13 - [4] (1) = 4 - ", a.toString());
-//		
-//	
-//		
-//		// Example
-//		HashTable<Integer> b = new HashTable<Integer>(5, HashTable.QUADRATIC_PROBING, 1.0);
-//		b.add(4);
-//		b.add(13);
-//		b.add(24);
-//		b.add(3);
-//		
-//		assertEquals("[0] (1) = 24 - [1] (0) = null - [2] (1) = 3 - [3] (1) = 13 - [4] (1) = 4 - ", b.toString());
-//		assertEquals(true, b.search(3));
-//		assertEquals(false, b.search(12));
-//		
-//		b.remove(24);
-//		assertEquals("[0] (2) = 24 - [1] (0) = null - [2] (1) = 3 - [3] (1) = 13 - [4] (1) = 4 - ", b.toString());
-//		
-//		assertEquals(true, b.search(3));
-//		b.add(15);
-//		assertEquals(true, b.search(3));
-//		assertEquals("[0] (1) = 15 - [1] (0) = null - [2] (1) = 3 - [3] (1) = 13 - [4] (1) = 4 - ", b.toString());
-//		
-//		
-//		// Example
-//		HashTable<Integer> c = new HashTable<Integer>(5, HashTable.DOUBLE_HASHING, 1.0);
-//		c.add(4);
-//		c.add(13);
-//		c.add(24);
-//		c.add(3);
-//		
-//		assertEquals("[0] (0) = null - [1] (1) = 3 - [2] (1) = 24 - [3] (1) = 13 - [4] (1) = 4 - ", c.toString());
-//		assertEquals(true, c.search(3));
-//		assertEquals(false, c.search(12));
-//		
-//		c.remove(24);
-//		assertEquals("[0] (0) = null - [1] (1) = 3 - [2] (2) = 24 - [3] (1) = 13 - [4] (1) = 4 - ", c.toString());
-//		
-//		assertEquals(true, c.search(3));
-//		c.add(15);
-//		assertEquals(true, c.search(3));
-//		assertEquals("[0] (1) = 15 - [1] (1) = 3 - [2] (2) = 24 - [3] (1) = 13 - [4] (1) = 4 - ", c.toString());
-//				
-//	}
-//	
-//	
+	@Test
+	public void testAddInteger() throws Exception
+	{
+		// Example
+		HashTable<Integer> a = new HashTable<Integer>(5, HashTable.LINEAR_PROBING, 1.0);
+		a.add(4);
+		assertEquals (0.2, a.getLF(), 0.1);
+		a.add(13);
+		assertEquals (0.4, a.getLF(), 0.1);
+		a.add(24);
+		assertEquals (0.6, a.getLF(), 0.1);
+		a.add(3);
+		assertEquals (0.8, a.getLF(), 0.1);
+		
+		assertEquals("[0] (1) = 24 - [1] (1) = 3 - [2] (0) = null - [3] (1) = 13 - [4] (1) = 4 - ", a.toString());
+		assertEquals(true, a.search(3));
+		assertEquals(false, a.search(12));
+		
+		a.remove(24);
+		assertEquals("[0] (2) = 24 - [1] (1) = 3 - [2] (0) = null - [3] (1) = 13 - [4] (1) = 4 - ", a.toString());
+		
+		assertEquals(true, a.search(3));
+		a.add(15);
+		assertEquals(true, a.search(3));
+		assertEquals("[0] (1) = 15 - [1] (1) = 3 - [2] (0) = null - [3] (1) = 13 - [4] (1) = 4 - ", a.toString());
+		
+	
+		
+		// Example
+		HashTable<Integer> b = new HashTable<Integer>(5, HashTable.QUADRATIC_PROBING, 1.0);
+		b.add(4);
+		b.add(13);
+		b.add(24);
+		b.add(3);
+		
+		assertEquals("[0] (1) = 24 - [1] (0) = null - [2] (1) = 3 - [3] (1) = 13 - [4] (1) = 4 - ", b.toString());
+		assertEquals(true, b.search(3));
+		assertEquals(false, b.search(12));
+		
+		b.remove(24);
+		assertEquals("[0] (2) = 24 - [1] (0) = null - [2] (1) = 3 - [3] (1) = 13 - [4] (1) = 4 - ", b.toString());
+		
+		assertEquals(true, b.search(3));
+		b.add(15);
+		assertEquals(true, b.search(3));
+		assertEquals("[0] (1) = 15 - [1] (0) = null - [2] (1) = 3 - [3] (1) = 13 - [4] (1) = 4 - ", b.toString());
+		
+		
+		// Example
+		HashTable<Integer> c = new HashTable<Integer>(5, HashTable.DOUBLE_HASHING, 1.0);
+		c.add(4);
+		c.add(13);
+		c.add(24);
+		c.add(3);
+		
+		assertEquals("[0] (0) = null - [1] (1) = 3 - [2] (1) = 24 - [3] (1) = 13 - [4] (1) = 4 - ", c.toString());
+		assertEquals(true, c.search(3));
+		assertEquals(false, c.search(12));
+		
+		c.remove(24);
+		assertEquals("[0] (0) = null - [1] (1) = 3 - [2] (2) = 24 - [3] (1) = 13 - [4] (1) = 4 - ", c.toString());
+		
+		assertEquals(true, c.search(3));
+		c.add(15);
+		assertEquals(true, c.search(3));
+		assertEquals("[0] (1) = 15 - [1] (1) = 3 - [2] (2) = 24 - [3] (1) = 13 - [4] (1) = 4 - ", c.toString());
+				
+	}
+	
+	
     
 
     
