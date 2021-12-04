@@ -6,12 +6,19 @@ public class HashTable<T> {
     //Use of enums is better but for the subject constatns are valid
     public static int LINEAR_PROBING = 0;
     public static int QUADRATIC_PROBING = 1;
+	public static int DOUBLE_HASHING = 2;
 
     private int B;
     private int redispersionType;
     private double maxLoadFactor;
     private HashNode<T>[] associativeArray;
 
+	/**
+	 * Constructor for the HashTable class
+	 * @param size
+	 * @param redispersionType2
+	 * @param maxLoadFactor2
+	 */
 	public HashTable(int size, int redispersionType2, double maxLoadFactor2) {
 		
 		this.B = size;
@@ -23,6 +30,11 @@ public class HashTable<T> {
         }
 	}
 
+	/**
+	 * Method to get the hash value of the key
+	 * @param key
+	 * @param value
+	 */
 	public int f(T element, int attempt) {
     	return redispersionType == LINEAR_PROBING ? 
     			(Math.abs(element.hashCode()) + attempt) % B
@@ -42,9 +54,12 @@ public class HashTable<T> {
 			attempt++;
 			index = f(element, attempt);
 		}
-		associativeArray[index] = new HashNode(element);
+		associativeArray[index] = new HashNode<T>(element);
 	}
 	
+	/**
+	 * Method that returns the string representation of the hash table
+	 */
     public String toString() {
        	String aux = "";
         for (int i = 0; i < associativeArray.length; i++) {
@@ -65,9 +80,14 @@ public class HashTable<T> {
 				validNodes++;
 			}
 		}
-		return (double) validNodes / associativeArray.length;
+		return 1.0* validNodes / associativeArray.length;
 	}
 
+	/**
+	 * Method to check if the hash table is full
+	 * returns true if the element is in the table, flase otherwise
+	 * @param element
+	 */
 	public boolean search(T element) {
 		int attempt = 0;
 		int index = f(element, attempt);
@@ -80,5 +100,8 @@ public class HashTable<T> {
 			index = f(element, attempt);
 		}
 		return false;
+	}
+
+	public void remove(int i) {
 	}
 }
