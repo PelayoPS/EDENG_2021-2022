@@ -1,25 +1,37 @@
 package hashTables;
 
 public class HashNode<T> {
-
-    //Use of enums is better but for the subject constatns are valid
-    public static int EMPTY = 0;
-    public static int DELETED = 2;
-    public static int VALID = 1;
-
-    public T element;
-    public int status;
-
-    /**
-     * Default constructor
-     */
-    public HashNode() {
-        this.element = null;
-        this.status = EMPTY;
-    }
-    
-    public HashNode(T element2) {
-        this.element = element2;
-        this.status = EMPTY;
-    }
+	
+	private T element;
+	private int status;
+	public static final int EMPTY = 0;
+	public static final int VALID = 1;
+	public static final int DELETED = 2;
+	
+	public HashNode() {
+		status = EMPTY;
+	}
+	
+	public HashNode(T element) {
+		this.element = element;
+		status = VALID;
+	}
+	
+	public T getElement() {
+		return element;
+	}
+	public void setElement(T element) {
+		this.element = element;
+		this.status = VALID;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void removeElement() {
+		this.status = DELETED;
+	}
+	@Override
+	public String toString() {
+		return "(" + this.status + ") = " + this.element; 
+	}
 }
