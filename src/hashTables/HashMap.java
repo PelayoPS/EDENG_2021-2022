@@ -129,8 +129,8 @@ public class HashMap<K, V> {
      * returns null when not found
 	 * @param element
 	 */
-	public V search(K element) {
-		return search(element,0);
+	public V get(K element) {
+		return get(element,0);
 	}
 
 	/**
@@ -138,13 +138,13 @@ public class HashMap<K, V> {
 	 * @param element
 	 * @param attempt
 	 */
-	private V search(K element, int attempt) {
+	private V get(K element, int attempt) {
 		int pos = f(element, attempt);
 		if(elements[pos].getStatus() == HashNode.EMPTY) {
 			return null;// not found
 		}
 		else if(!elements[pos].getElement().equals(element)){
-			return search(element,attempt+1);// not found but valid node
+			return get(element,attempt+1);// not found but valid node
 		}else {
 			if(elements[pos].getStatus() == HashNode.DELETED) {
 				return null;// not found on deleted node
