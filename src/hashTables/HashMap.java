@@ -1,9 +1,10 @@
 package hashTables;
 
 
-public class HashTable<T> {
+public class HashMap<K, V> {
 	
-	private HashNode<T>[] elements;
+	private HashMapNode<K, V>[] elements;
+    private HashMapNode<K, V>[] values;
 	private int B;
 	private int R;
 	
@@ -22,26 +23,27 @@ public class HashTable<T> {
 	 * @param probingType
 	 * @param maxLF
 	 */
-	public HashTable(int B,int probingType,  double maxLF) {
+	public HashMap(int B,int probingType,  double maxLF) {
 		this.B = B;
 		this.R = getPrevPrimeNumber(B);
 		this.probingType = probingType;
 		this.maxLF = maxLF;
-		this.elements = new HashNode[B];
+		this.elements = new HashMapNode[B];
+        this.values = new HashMapNode[B];
 		for (int i = 0; i < B; i++) {
-			elements[i] = new HashNode<T>();
+			elements[i] = new HashMapNode<K, V>();
 		}
 		
 	}
 	
 	/**
-	 * constructor for the hash table using minlf as parameter
+	 * constructor for the hash map using minlf as parameter
 	 * @param B
 	 * @param probingType
 	 * @param maxLF
 	 * @param minLF
 	 */
-	public HashTable(int B, int probingType, double maxLF, double minLF) {
+	public HashMap(int B, int probingType, double maxLF, double minLF) {
 		this(B,probingType,maxLF);
 		this.minLF = minLF;
 	}
@@ -52,7 +54,7 @@ public class HashTable<T> {
 	 * @param attempt
 	 * @return
 	 */
-	public int f(T element, int attempt) {
+	public int f(K element, int attempt) {
 		if(probingType == LINEAR_PROBING) {// linear probing
 			return (Math.abs(element.hashCode()) + attempt)%B;
 		}
@@ -77,7 +79,7 @@ public class HashTable<T> {
 	public String toString() {
 		String aux = "";
 		int pos = 0;
-		for(HashNode<T> hn: elements) {
+		for(HashMapNode<K, V> hn: elements) {
 			aux += "[" + pos +"] " + hn.toString() + " - ";	// [pos](status) - element
 			pos++;
 		}
@@ -94,9 +96,10 @@ public class HashTable<T> {
 	/**
 	 * adds an element to the hash table
 	 * @param element
+     * @param value
 	 */
-	public void add(T element) {
-		add(element,0);
+	public void put(K element, V value) {
+		put(element, value, 0);
 		if(getLF() > maxLF) {
 			while(getLF() > 0.4) {
 				dynamicResizeUp(getNextPrimeNumber(B));
@@ -107,23 +110,26 @@ public class HashTable<T> {
 	/**
 	 * private method to add an element to the table
 	 * @param element
+     * @param value
 	 * @param attempt
 	 */
-	private void add(T element, int attempt) {
+	private void put(K element, V value, int attempt) {
 		int pos = f(element, attempt);
 		if(elements[pos].getStatus() == HashNode.VALID) {
-			add(element,attempt+1);
+			put(element, value, attempt+1);
 		}else {
 			elements[pos].setElement(element);
+            values[pos].setValue(value);
 			nElements++;
 		}
 	}
 	
 	/**
 	 * searchs for an element in the hash table
+     * returns null when not found
 	 * @param element
 	 */
-	public boolean search(T element) {
+	public V search(K element) {
 		return search(element,0);
 	}
 
@@ -132,18 +138,18 @@ public class HashTable<T> {
 	 * @param element
 	 * @param attempt
 	 */
-	private boolean search(T element, int attempt) {
+	private V search(K element, int attempt) {
 		int pos = f(element, attempt);
 		if(elements[pos].getStatus() == HashNode.EMPTY) {
-			return false;// not found
+			return null;// not found
 		}
 		else if(!elements[pos].getElement().equals(element)){
 			return search(element,attempt+1);// not found but valid node
 		}else {
 			if(elements[pos].getStatus() == HashNode.DELETED) {
-				return false;// not found on deleted node
+				return null;// not found on deleted node
 			}
-			return true;// found
+			return values[pos].getValue();// found
 		}
 	}
 	
@@ -151,7 +157,7 @@ public class HashTable<T> {
 	 * removes an element from the hash table
 	 * @param element
 	 */
-	public void remove(T element) {
+	public void remove(K element) {
 		remove(element,0);
 		if (getLF() < minLF) {
 			dynamicResizeDown(R);
@@ -163,7 +169,7 @@ public class HashTable<T> {
 	 * @param element
 	 * @param attempt
 	 */
-	private void remove(T element, int attempt) {
+	private void remove(K element, int attempt) {
 		int pos = f(element, attempt);
 		int status = elements[pos].getStatus();
 		if(status == HashNode.EMPTY) {
@@ -230,12 +236,13 @@ public class HashTable<T> {
 	 * @param newSize
 	 */
 	private void dynamicResizeUp(int newSize) {
-		HashTable<T> aux = new HashTable<T>(newSize, probingType, maxLF);
-		for(HashNode<T> node : elements) {//adds the nodes again to new table
-			if(node.getStatus() == HashNode.VALID) {
-				aux.add(node.getElement());				
+		HashMap<K, V> aux = new HashMap<K, V>(newSize, probingType, maxLF);
+		for(int i = 0; i < elements.length; i++) {//adds the nodes again to new table
+			if(elements[i].getStatus() == HashNode.VALID) {
+				aux.put(elements[i].getElement(), values[i].getValue());				
 			}
 		}
+
 		this.elements = aux.getElements();
 		this.R = B;
 		this.B = newSize;
@@ -246,10 +253,10 @@ public class HashTable<T> {
 	 * @param newSize
 	 */
 	private void dynamicResizeDown(int newSize) {
-		HashTable<T> aux = new HashTable<T>(newSize, probingType, maxLF);
-		for(HashNode<T> node : elements) {//adds the nodes again to new table
-			if(node.getStatus() == HashNode.VALID) {
-				aux.add(node.getElement());				
+		HashMap<K, V> aux = new HashMap<K, V>(newSize, probingType, maxLF);
+		for(int i = 0; i < elements.length; i++) {//adds the nodes again to new table
+			if(elements[i].getStatus() == HashNode.VALID) {
+				aux.put(elements[i].getElement(), values[i].getValue());			
 			}
 		}
 		this.elements = aux.getElements();
@@ -261,7 +268,7 @@ public class HashTable<T> {
 	 * returns the array of elements
 	 * @return
 	 */
-	private HashNode<T>[] getElements(){
+	private HashMapNode<K, V>[] getElements(){
 		return this.elements;
 	}
 	

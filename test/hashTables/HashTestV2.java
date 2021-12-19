@@ -1,11 +1,8 @@
-package hastTables;
+package hashTables;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import hashTables.HashTable;
-
 
 public class HashTestV2 {
 
